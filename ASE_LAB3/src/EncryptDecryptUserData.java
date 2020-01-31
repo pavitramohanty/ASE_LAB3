@@ -7,37 +7,35 @@ import javax.crypto.Cipher;
 
 public class EncryptDecryptUserData {
 	 public static void main(String args[]) throws Exception{
-		 
-	      Signature sign = Signature.getInstance("SHA256withRSA");
 	      
 	      //keypair generator object creation 
-	      KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
+	      KeyPairGenerator kp = KeyPairGenerator.getInstance("RSA");
 	      
 	      //keypair object initialization
-	      keyPairGen.initialize(2048);
+	      kp.initialize(2048);
 	      
 	      //fetching keypair 
-	      KeyPair pair = keyPairGen.generateKeyPair();      
+	      KeyPair pair = kp.generateKeyPair();      
 		
 	      //cipher object creation
-	      Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+	      Cipher cipher_obj = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 	        
 	      //Cipher object initialization
-	      cipher.init(Cipher.ENCRYPT_MODE, pair.getPublic());
+	      cipher_obj.init(Cipher.ENCRYPT_MODE, pair.getPublic());
 		  
 	      //data to be encrypted
-	      byte[] input = "username@gmail.com".getBytes();	  
-	      cipher.update(input);
-	      	 
+	      byte[] input = "Important Data of user".getBytes();	  
+	      cipher_obj.update(input);
 		  
 	      //encrypt data
-	      byte[] cipherText = cipher.doFinal();	 
-	      System.out.println(new String(cipherText,"UTF8"));
+	      byte[] cipherData = cipher_obj.doFinal();	 
+	      
+	      System.out.println(new String(cipherData, "UTF8"));
 	      
 	      //decrypt the data and then display to the end user
-	      cipher.init(Cipher.DECRYPT_MODE, pair.getPrivate());
+	      cipher_obj.init(Cipher.DECRYPT_MODE, pair.getPrivate());
 	      
-	      byte[] decipheredText = cipher.doFinal(cipherText);
-		 
+	      byte[] decipheredText = cipher_obj.doFinal(cipherData);
+	      System.out.println(new String(decipheredText));
 	   }
 }
