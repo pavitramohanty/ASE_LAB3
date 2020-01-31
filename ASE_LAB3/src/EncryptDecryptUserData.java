@@ -28,14 +28,16 @@ public class EncryptDecryptUserData {
 	      //data to be encrypted
 	      byte[] input = "username@gmail.com".getBytes();	  
 	      cipher.update(input);
+	      	 
 		  
 	      //encrypt data
 	      byte[] cipherText = cipher.doFinal();	 
-	      
+	      System.out.println(new String(cipherText,"UTF8"));
 	      
 	      //decrypt the data and then display to the end user
 	      cipher.init(Cipher.DECRYPT_MODE, pair.getPrivate());
 	      
 	      byte[] decipheredText = cipher.doFinal(cipherText);
+		 
 	   }
 }
